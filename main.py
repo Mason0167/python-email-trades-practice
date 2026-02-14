@@ -13,4 +13,4 @@ for msg in messages:
     if result:
         filename, filedata = result
         
-        attachment_handler(filename, filedata)
+        download_attachment(filename, filedata)

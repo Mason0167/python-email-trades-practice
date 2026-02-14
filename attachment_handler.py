@@ -1,9 +1,10 @@
 import os
 from config import *
 
-def attachment_handler(filename, filedata):
+def download_attachment(filename, filedata):
     
-    base_dir = os.path.dirname(os.path.abspath(__file__))  # __file__ 是程式檔案路徑
+    # __file__ 是程式檔案路徑
+    base_dir = os.path.dirname(os.path.abspath(__file__))  
     save_path = os.path.join(base_dir, SAVE_DIR)
 
     # Ensure the dir exists
@@ -16,3 +17,4 @@ def attachment_handler(filename, filedata):
         f.write(filedata)
 
     print(f"Saved: {file_path}")
+
