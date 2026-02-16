@@ -6,7 +6,6 @@ This repository is a practice project to learn how to:
   4. Decrypt password-protected PDFs
   5. Extract structured information (e.g., stock trades) from PDFs
 
-This project is for learning purposes only and is not a production-ready trading system.
 ---
 ## Features
 1. Automatic download of email attachments from Gmail
