@@ -10,7 +10,7 @@ This repository is a practice project to learn how to:
 1. Automatic download of email attachments from Gmail
 2. Support for password-protected PDF files
 3. Extraction of key data fields such as:
-  a. Ticker / Stock Name
+  - Ticker / Stock Name
   b. Buy / Sell
   c. Quantity / Price / Fees / Tax / Total
   d. Trade Date
