@@ -9,4 +9,4 @@ SUBJECT_KEYWORDS = [
     "台新證券受託買賣外國有價證券確認書"
 ]
 PDF_DIR = "transaction_records"
-PDF_PASSWORD = "8996"
+PDF_PASSWORD = ""

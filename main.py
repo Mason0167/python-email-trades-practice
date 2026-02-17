@@ -18,7 +18,6 @@ from config import *
 # Decrypt password-protected PDFs and ZIPs
 # file_path = "transaction_records\台新證券受託買賣外國有價證券確認書20260126.pdf"
 # file_path = "transaction_records\綜合月對帳單2025年12月.pdf"
-file_path = "transaction_records\TSSCO_Bill202407.zipf"
-
+file_path = "transaction_records\TSSCO_Bill202407.zip"
 
 parse_pdf(file_path, PDF_PASSWORD)
