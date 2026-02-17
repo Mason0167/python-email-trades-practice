@@ -2,7 +2,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 import base64
 
-
 def get_service(PATH, SCOPES):
     flow = InstalledAppFlow.from_client_secrets_file(PATH, SCOPES)
     creds = flow.run_local_server(port=0)
@@ -50,8 +49,6 @@ def gmail_parser(msg, service):
             body = part.get("body", {})
 
             if not filename:
-                continue
-            if not filename.lower().endswith(".pdf"):
                 continue
 
             if "data" in body:
