@@ -1,4 +1,3 @@
-PATH = r"C:/Users/mason/python/python-email-pdf-parsing-practice/credentials.json"
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 SENDER_ADDRESS = "service@billu.tssco.com.tw"
@@ -9,4 +8,4 @@ SUBJECT_KEYWORDS = [
     "台新證券受託買賣外國有價證券確認書"
 ]
 PDF_DIR = "transaction_records"
-PDF_PASSWORD = "8996"
+PDF_PASSWORD = ""
