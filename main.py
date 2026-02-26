@@ -13,11 +13,14 @@ from config import *
 #     if result:
 #         filename, filedata = result
         
-#         download_attachment(filename, filedata)
+#         download_attachment(filename, filedata, PDF_DIR)
 
 # Decrypt password-protected PDFs and ZIPs
-# file_path = "transaction_records\台新證券受託買賣外國有價證券確認書20260126.pdf"
-# file_path = "transaction_records\綜合月對帳單2025年12月.pdf"
-file_path = "transaction_records\TSSCO_Bill202407.zip"
+file_path = "transaction_records\台新證券受託買賣外國有價證券確認書20260126.pdf"
+parse_USA_pdf(file_path, PDF_PASSWORD)
 
-parse_zip(file_path, PDF_PASSWORD)
+# file_path = "transaction_records\綜合月對帳單2026年01月.pdf"
+# parse_TW_pdf(file_path, PDF_PASSWORD)
+
+# file_path = "transaction_records/TSSCO_Bill202510.zip"
+# parse_zip(file_path, PDF_PASSWORD)
