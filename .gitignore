@@ -28,5 +28,6 @@ token.json
 # Logs
 *.log
 
-# Optional: transaction records folder
+# folders
 transaction_records/
+t/
