@@ -1,3 +1,5 @@
+from secret import *
+
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 SENDER_ADDRESS = "service@billu.tssco.com.tw"
 DATE_AFTER = "2026-02-16"
@@ -8,3 +10,7 @@ SUBJECT_KEYWORDS = [
 ]
 PDF_DIR = "transaction_records"
 
+PDF_PASSWORD = PDF_PASSWORD_SECRET
+PATH = PATH_SECRET
+NOTION_TOKEN = NOTION_TOKEN_SECRET
+DB_ID = DB_ID_SECRET

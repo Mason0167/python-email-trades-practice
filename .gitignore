@@ -24,6 +24,7 @@ Thumbs.db
 # Credentials and sensitive files
 credentials.json
 token.json
+secret.py
 
 # Logs
 *.log
