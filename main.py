@@ -1,7 +1,9 @@
 from email_handler import *
 from attachment_handler import *
+from notion_handler import *
 from config import *
 
+from pathlib import Path
 
 # Filter emails then download the attachment
 # service = get_service(PATH, SCOPES)
@@ -15,12 +17,31 @@ from config import *
         
 #         download_attachment(filename, filedata, PDF_DIR)
 
-# Decrypt password-protected PDFs and ZIPs
-file_path = "transaction_records\台新證券受託買賣外國有價證券確認書20260126.pdf"
-parse_USA_pdf(file_path, PDF_PASSWORD)
 
-# file_path = "transaction_records\綜合月對帳單2026年01月.pdf"
-# parse_TW_pdf(file_path, PDF_PASSWORD)
 
-# file_path = "transaction_records/TSSCO_Bill202510.zip"
-# parse_zip(file_path, PDF_PASSWORD)
+
+folder_path = Path("transaction_records")
+
+for file_path in folder_path.iterdir():
+    if not file_path.is_file():
+        continue
+
+    suffix = file_path.suffix.lower()
+
+    if suffix == ".pdf":
+        filename = os.path.basename(file_path)
+        if "受託" in filename:
+            print("\nProcessing PDF:", file_path)
+            trades = parse_USA_pdf(file_path, PDF_PASSWORD)
+        else:
+            print("\nProcessing PDF:", file_path)
+            trades = parse_TW_pdf(file_path, PDF_PASSWORD)
+
+    elif suffix == ".zip":
+        print("\nProcessing PDF:", file_path)
+        trades = parse_zip(file_path, PDF_PASSWORD)
+
+    for trade in trades:
+        normalize_trade(trade)
+        print("\n", trade)
+        create_notion_page(trade, NOTION_TOKEN, DB_ID)

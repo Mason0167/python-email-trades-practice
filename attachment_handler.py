@@ -3,7 +3,6 @@ import re
 import zipfile
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
-from datetime import date
 
 
 def download_attachment(filename, filedata, PDF_DIR):
@@ -22,6 +21,8 @@ def download_attachment(filename, filedata, PDF_DIR):
         f.write(filedata)
 
     print(f"Saved: {file_path}")
+
+
 
 def parse_USA_pdf(file_path, password=None):
     base_dir = os.path.dirname(os.path.abspath(__file__))  
@@ -53,29 +54,22 @@ def parse_USA_pdf(file_path, password=None):
 
         parts = line.split()
 
-        cleanSide = ""
-        if "-" in parts[10]:
-            cleanSide = "Buy"
-        else:
-            cleanSide = "Sell"
-
-        year, month, day = parts[0].split("/")
-        cleanTradeDate = date(int(year), int(month), int(day)).isoformat()
-
         Tax = 0
-
         trade = {
-            "Trade Date": cleanTradeDate,
+            "Ticker": parts[3],
+            "Company Name": "",
+            "Side": parts[10],
+            "Execution Price": parts[6],
+            "Quantity": parts[5],
+            "Commission": parts[8],
             "Tax": Tax,
             "Currency": parts[2],
-            "Ticker": parts[3],
-            "Side": cleanSide,
-            "Quantity": parts[5],
-            "Execution Price": parts[6],
-            "Commission": parts[8],
-            "Total Amount": parts[10]
+            "Total Amount": parts[10],
+            "Trade Date": parts[0]
         }
         trades.append(trade)
+    
+    return trades
 
 
 
@@ -131,42 +125,35 @@ def parse_TW_pdf(file_path, password=None):
     for line in full_text.splitlines():
         parts = line.split()
 
-        month, day = parts[0].split("/")
-        day = day.strip("@")
-        trade_date = date(year, int(month), int(day)).isoformat()
-
-        cleanSide = ""
-        if parts[5] == "現買":
-            cleanSide = "Buy"
-        else:
-            cleanSide = "Sell"
+        trade_date = f"{year}/{parts[0]}"
 
         Tax = 0
         Commission = 1
         if len(parts) == 10:
-            cleanTotalAmount = parts[9].strip("-")
+            cleanTotalAmount = parts[9]
             Commission = int(parts[4]) - int(parts[8])
         elif len(parts) == 11:
-            cleanTotalAmount = parts[10].strip("-")
+            cleanTotalAmount = parts[10]
             Commission = int(parts[4]) - int(parts[9])
             Tax = int(parts[8])
         else:
-            cleanTotalAmount = parts[8].strip("-")
+            cleanTotalAmount = parts[8]
 
         trade = {
             "Currency": "TWD",
             "Tax": Tax,
-            "TradeDate": trade_date,
+            "Trade Date": trade_date,
             "Ticker": parts[1],
             "Quantity": parts[2],
-            "ExecutionPrice": parts[3],
+            "Execution Price": parts[3],
             "Commission": Commission,
-            "Side": cleanSide,
+            "Side": parts[5],
             "Company Name": parts[6],
-            "TotalAmount": cleanTotalAmount
+            "Total Amount": cleanTotalAmount
         }
-        print(trade)
         trades.append(trade)
+    
+    return trades
     
 
 
@@ -226,34 +213,24 @@ def parse_zip(file_path, PDF_PASSWORD=None):
     trades = []
 
     for row in grouped_rows:
-        month, day = row[0].split("/")
-        trade_date = date(year, int(month), int(day)).isoformat()
-
-        cleanTicker = row[6].strip("()")
-        cleanTotalAmount = row[8].strip("-")
-
-        cleanSide = ""
-        if row[5] == "現買":
-            cleanSide = "Buy"
-        else:
-            cleanSide = "Sell"
+        trade_date = f"{year}/{row[0]}"
 
         Tax = 0
         trade = {
             "Currency": "TWD",
             "Tax": Tax,
-            "Trade date": trade_date,
+            "Trade Date": trade_date,
             "Company Name": row[1],
             "Quantity": row[2],
             "Execution Price": row[3],
             "Commission": row[4],
-            "Side": cleanSide,
-            "Ticker": cleanTicker,
-            "Total Amount": cleanTotalAmount
+            "Side": row[5],
+            "Ticker": row[6],
+            "Total Amount": row[8]
         }
         trades.append(trade)
 
-        
+    return trades
         
 
     
